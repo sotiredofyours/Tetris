@@ -30,7 +30,7 @@ namespace Tetris
         }
 
         public Figure CurrentFigure = new MyRectangle();
-        public Field field = new Field(900, 900);
+        public Field field = new Field(350, 900);
         public Direction dir { get; set; }
         private void Update(object sender, EventArgs e)
         {
@@ -52,18 +52,19 @@ namespace Tetris
                     break;
                 }
             }
-            Console.WriteLine(CurrentFigure.FigureBlocks[0].Y);
             CurrentFigure.MoveDown();
+            
             var y = CurrentFigure.FigureBlocks.Any(x => x.Y >= 850);
             if (y || !canMove())
             {
                 foreach (var x in CurrentFigure.FigureBlocks)
                 {
-                    field[x.X / 50, x.Y / 50] = 1;
+                    field[x.Y / 50, x.X / 50] = x.Box;
                 }
                 CurrentFigure = RandomFigure();
                 InitializeFigure();
             }
+            field.DeleteFillRows();
             dir = Direction.None;
         }
 
@@ -71,7 +72,7 @@ namespace Tetris
         {
             foreach (var y in CurrentFigure.FigureBlocks)
             {
-                if (field[y.X / 50, (y.Y+50) / 50] == 1) return false;
+                if (field[(y.Y+50) / 50, y.X / 50] != null) return false;
             }
             return true;
         }
