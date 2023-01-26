@@ -24,13 +24,13 @@ namespace Tetris
             PictureBox pic1 = new PictureBox();
             pic1.BackColor = Color.Aqua;
             pic1.Location = new Point(0,0);
-            pic1.Size = new Size(900,900);
+            pic1.Size = new Size(450,900);
             Controls.Add(pic1);
             Controls.SetChildIndex(pic1, -1);
         }
 
         public Figure CurrentFigure = new MyRectangle();
-        public Field field = new Field(350, 900);
+        public Field field = new Field(450, 900);
         public Direction dir { get; set; }
         private void Update(object sender, EventArgs e)
         {

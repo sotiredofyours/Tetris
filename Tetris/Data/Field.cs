@@ -28,10 +28,23 @@ namespace Tetris.Data
             {
                 if (field[i].All(x => x != null))
                 {
-                    foreach (var x in field[i])
+                    for (int j = 0; j < field[i].GetLength(1); j++)
                     {
-                        x.Hide();
+                        field[i][j].Dispose();
+                        field[i][j].Hide();
+                        field[i][j] = null;
                     }
+                    MoveAfterDeleting(i);
+                }
+            }
+        }
+        private void MoveAfterDeleting(int y)
+        {
+            for (int i = field.GetLength(0); i > y; i--)
+            {
+                for (int j = 0; j < field[i].GetLength(1); j++)
+                {
+                    field[i][j] = field[i - 1][j];
                 }
             }
         }
